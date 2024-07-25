@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Management</title>
+    <link rel="stylesheet" href="./venuestyle.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Venue Management System</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Venues</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Bookings</a></li>
+                <li><a href="#">Users</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <main>
+            <h2>Manage Venues</h2>
+            <button class="add-venue-btn">Add New Venue</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Venue Name</th>
+                        <th>Location</th>
+                        <th>Capacity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Grand Hall</td>
+                        <td>New York</td>
+                        <td>500</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Conference Center</td>
+                        <td>Los Angeles</td>
+                        <td>300</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Add Venue Modal -->
+    <div id="add-venue-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Add New Venue</h2>
+            <form>
+                <label for="venue-name">Venue Name</label>
+                <input type="text" id="venue-name" name="venue-name">
+                
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location">
+                
+                <label for="capacity">Capacity</label>
+                <input type="number" id="capacity" name="capacity">
+                
+                <button type="submit">Add Venue</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
