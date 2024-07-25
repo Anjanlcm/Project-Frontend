@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp - Venue Booking System</title>
+    <link rel="stylesheet" href="./signup.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Register</h2>
+            <form id="signupForm">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" required />
+
+                <label for="mname">Middle Name</label>
+                <input type="text" id="mname" name="mname" />
+
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="SignUpEmail" name="email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="SignUpPassword" name="password" required />
+
+                <label for="gender">Gender</label>
+                <select id="UserGender" name="gender" required>
+                    <option value="" disabled selected>Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="phone">Phone</label>
+                <input type="number" id="UserPhoneNumber" name="phone" required />
+
+                <label for="province">Province</label>
+                <input type="text" id="UserProvince" name="province" required />
+
+                <label for="district">District</label>
+                <input type="text" id="UserDistrict" name="district" required />
+
+                <label for="city">City</label>
+                <input type="text" id="UserCity" name="city" required /><br /><br />
+
+                <button type="button" id="btnUserSignUp">Sign Up</button>
+                <p class="signup-link">
+                    Already have an account? <a href="../login.html">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const UserSignUpButton = document.querySelector('#btnUserSignUp');
+    const FirstName = document.querySelector('#fname');
+    const MiddleName = document.querySelector('#mname');
+    const LastName = document.querySelector('#lname');
+    const Email = document.querySelector('#SignUpEmail');
+    const Password = document.querySelector('#SignUpPassword');
+    const Gender = document.querySelector('#UserGender');
+    const PhoneNumber = document.querySelector('#UserPhoneNumber');
+    const Province = document.querySelector('#UserProvince');
+    const District = document.querySelector('#UserDistrict');
+    const City = document.querySelector('#UserCity');
+
+    function signUp(firstName, middleName, lastName, email, password, gender, phoneNumber, province, district, city) {
+        const payload = {
+            FirstName: firstName,
+            MiddleName: middleName,
+            LastName: lastName,
+            UserEmail: email,
+            UserPassword: password,
+            Gender: gender,
+            MobileNo: phoneNumber,
+            Address_Province: province,
+            Address_District: district,
+            Address_City: city
+        };
+
+        console.log('Payload:', payload); // Debug log
+
+        fetch('https://localhost:7147/api/Account/SignUp_User', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Response status:', response.status); // Debug log
+
+            // Check if the response is OK (status code 200-299)
+            if (response.ok) {
+                return response.json(); // Parse the JSON from the response
+            } else {
+                return response.text().then(text => {
+                    // Handle non-200 responses
+                    throw new Error(text || 'Network response was not ok');
+                });
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+            if (data.success) {
+                // Notify the user and redirect to login page
+                alert(data.message); // Access the message from JSON response
+                window.location.href = 'login.html'; // Redirect to login page
+            } else {
+                // Handle case where signup was not successful but no network error
+                document.getElementById('error-message').textContent = data.message || 'Sign-up failed';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message); // Show error message
+        });
+    }
+
+    if (UserSignUpButton) {
+        UserSignUpButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent form from submitting
+            signUp(
+                FirstName.value,
+                MiddleName.value,
+                LastName.value,
+                Email.value,
+                Password.value,
+                Gender.value,
+                PhoneNumber.value,
+                Province.value,
+                District.value,
+                City.value
+            );
+        });
+    }
+});
+
+</script>
+</html>
